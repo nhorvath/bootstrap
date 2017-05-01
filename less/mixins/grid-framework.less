@@ -5,16 +5,11 @@
 
 .make-grid-columns() {
   // Common styles for all sizes of grid columns, widths 1-12
-  .col(@index) { // initial
-    @item: ~".col-xs-@{index}, .col-sm-@{index}, .col-md-@{index}, .col-lg-@{index}";
-    .col((@index + 1), @item);
-  }
-  .col(@index, @list) when (@index =< @grid-columns) { // general; "=<" isn't a typo
-    @item: ~".col-xs-@{index}, .col-sm-@{index}, .col-md-@{index}, .col-lg-@{index}";
-    .col((@index + 1), ~"@{list}, @{item}");
-  }
-  .col(@index, @list) when (@index > @grid-columns) { // terminal
-    @{list} {
+  .col(@index) when (@index <= @grid-columns) { // terminal
+    .col-xs-@{index},
+	.col-sm-@{index},
+	.col-md-@{index},
+	.col-lg-@{index} {
       position: relative;
       // Prevent columns from collapsing when empty
       min-height: 1px;
@@ -22,6 +17,7 @@
       padding-left:  ceil((@grid-gutter-width / 2));
       padding-right: floor((@grid-gutter-width / 2));
     }
+    .col((@index + 1));
   }
   .col(1); // kickstart it
 }
